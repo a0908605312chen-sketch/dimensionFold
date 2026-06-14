@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>記憶餘燼：無色禁區 | 電影籌資互動站</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Rajdhani:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <canvas id="signalCanvas" aria-hidden="true"></canvas>
+    <div class="scanline" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="回到首頁">
+        <span class="brand-mark"></span>
+        <span>記憶餘燼：無色禁區</span>
+      </a>
+      <nav class="nav-links" aria-label="主要導覽">
+        <a href="#funding">籌資</a>
+        <a href="#interaction">角色通訊</a>
+        <a href="#budget">行銷預算</a>
+        <a href="#story">企劃</a>
+      </nav>
+      <a class="nav-action" href="#funding">支援計畫</a>
+    </header>
+
+    <main id="top">
+      <section class="hero-grid" aria-labelledby="site-title">
+        <div class="hero-copy">
+          <p class="eyebrow">PROJECT NO. M-00 / SCI-FI FILM FUNDING</p>
+          <h1 id="site-title">當世界失去顏色，真相成了最後的光。</h1>
+          <p class="hero-lead">
+            《記憶餘燼：無色禁區》是一部科幻懸疑電影。觀眾不只是出資者，也是進入禁區、向角色追問真相的目擊者。
+          </p>
+          <div class="hero-actions" aria-label="主要操作">
+            <a class="primary-button" href="#interaction">啟動角色通訊</a>
+            <a class="ghost-button" href="#story">查看電影企劃</a>
+          </div>
+          <dl class="signal-stats" aria-label="企劃快速資訊">
+            <div>
+              <dt>類型</dt>
+              <dd>科幻懸疑</dd>
+            </div>
+            <div>
+              <dt>片長</dt>
+              <dd>110-120 分</dd>
+            </div>
+            <div>
+              <dt>核心命題</dt>
+              <dd>痛苦被刪除後，人還完整嗎</dd>
+            </div>
+          </dl>
+        </div>
+
+        <aside class="funding-console" id="funding" aria-labelledby="funding-title">
+          <div class="console-header">
+            <div>
+              <p class="panel-kicker">FUNDING STATUS</p>
+              <h2 id="funding-title">籌資進度</h2>
+            </div>
+            <span class="live-dot">LIVE</span>
+          </div>
+
+          <div class="progress-readout">
+            <strong id="fundingPercent">0%</strong>
+            <span id="fundingGap">尚需 NT$0</span>
+          </div>
+          <div class="progress-track" aria-label="籌資進度條">
+            <div id="fundingBar" class="progress-fill"></div>
+          </div>
+          <div class="funding-numbers">
+            <span id="fundingRaised">已募 NT$0</span>
+            <span id="fundingGoal">目標 NT$0</span>
+          </div>
+
+          <div class="pledge-panel" aria-labelledby="pledge-title">
+            <h3 id="pledge-title">選擇支援層級</h3>
+            <div id="pledgeTiers" class="tier-list"></div>
+            <button id="pledgeButton" class="primary-button full-button" type="button">
+              模擬支援此計畫
+            </button>
+            <p id="pledgeMessage" class="microcopy">所有金額為企劃展示用，可在 script.js 內集中修改。</p>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section-shell split-section" id="interaction" aria-labelledby="interaction-title">
+        <div class="section-copy">
+          <p class="eyebrow">AUDIENCE INTERACTION</p>
+          <h2 id="interaction-title">角色文本互動</h2>
+          <p>
+            觀眾可選擇林澈、白栩、紀衡或林曦進行文字通訊。系統會依據「記憶、禁區、白色、妹妹、籌資」等關鍵字回應，讓行銷網站本身成為故事入口。
+          </p>
+        </div>
+
+        <div class="comms-console" aria-label="角色通訊控制台">
+          <div id="characterTabs" class="character-tabs" role="tablist" aria-label="選擇角色"></div>
+          <div class="dialogue-window" id="dialogueWindow" aria-live="polite"></div>
+          <form id="dialogueForm" class="dialogue-form">
+            <label class="sr-only" for="audienceInput">輸入想詢問角色的內容</label>
+            <input
+              id="audienceInput"
+              type="text"
+              autocomplete="off"
+              placeholder="輸入訊息，例如：你知道無色禁區的真相嗎？"
+            />
+            <button class="primary-button" type="submit">送出</button>
+          </form>
+          <div id="promptChips" class="prompt-chips" aria-label="快速提問"></div>
+        </div>
+      </section>
+
+      <section class="section-shell budget-section" id="budget" aria-labelledby="budget-title">
+        <div class="section-copy">
+          <p class="eyebrow">MARKETING ALLOCATION</p>
+          <h2 id="budget-title">行銷預算比例</h2>
+          <p>
+            本企劃建議將總籌資的 <strong id="marketingRateText">0%</strong> 作為行銷預算，比例與分配項目皆可在設定變數中調整。
+          </p>
+        </div>
+        <div class="budget-layout">
+          <div class="budget-total">
+            <span>行銷預算估算</span>
+            <strong id="marketingTotal">NT$0</strong>
+            <p id="marketingBasis">以目標金額計算</p>
+          </div>
+          <div id="budgetList" class="budget-list"></div>
+        </div>
+      </section>
+
+      <section class="section-shell story-section" id="story" aria-labelledby="story-title">
+        <div class="section-copy">
+          <p class="eyebrow">FILM PACKAGE</p>
+          <h2 id="story-title">電影企劃核心</h2>
+        </div>
+        <div class="story-grid">
+          <article>
+            <span>01</span>
+            <h3>故事定位</h3>
+            <p>近未來城市因記憶清除實驗失去色彩，前記憶修復師林澈踏入無色禁區，尋找被官方宣告死亡的妹妹林曦。</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>情感主軸</h3>
+            <p>兄妹關係讓科幻設定落地。林澈必須面對愧疚，選擇讓人們痛苦但真實地活著。</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>視覺策略</h3>
+            <p>前半段以灰白、冷光、科技線條建立壓迫感，記憶復燃時以紅、黃、藍等局部色彩逐步滲入畫面。</p>
+          </article>
+          <article>
+            <span>04</span>
+            <h3>宣傳語</h3>
+            <p>「別相信白色。相信餘燼。」以角色訊息、社群謎題、互動文本共同擴散電影世界觀。</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>記憶不是資料，是傷口。</span>
+      <span>Prototype site for film fundraising and audience interaction.</span>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

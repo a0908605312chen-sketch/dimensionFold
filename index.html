@@ -1,1 +1,101 @@
 
+    goal: 8000000,
+    raised: 3260000,
+    currency: "NT$",
+    marketingBudgetRate: 0.28,
+    pledgeTiers: [
+      {
+        id: "signal",
+        title: "訊號支援者",
+        amount: 800,
+        reward: "電子感謝名單、角色加密訊息一則"
+      },
+      {
+        id: "memory",
+        title: "記憶保存者",
+        amount: 2800,
+        reward: "數位設定集、片尾感謝名單、禁區檔案包"
+      },
+      {
+        id: "ember",
+        title: "餘燼同行者",
+        amount: 9600,
+        reward: "首映邀請、限定海報、導演線上映後會"
+      }
+    ]
+    marketingBudgetRate: 0.28
+  },
+  marketingBudget: [
+    { label: "預告片與主視覺製作", percentage: 30 },
+    "無色禁區的真相是什麼？",
+    "林曦還活著嗎？",
+    "為什麼不能相信白色？",
+    "我支援籌資會改變什麼？"
+    "目前電影製作籌資進度如何？"
+  ],
+  characters: [
+    {
+        zone: "無色禁區不是災難現場，是實驗留下的空洞。牆後面沒有怪物，只有被迫安靜的人。",
+        white: "白色不是純淨，是覆蓋。它把所有顏色壓成同一種沉默。",
+        sister: "林曦的訊號還在。只要她還能說出我的名字，我就不能承認她已經死了。",
+        funding: "你的支援能讓我們拍出記憶復燃的那一刻。那不是特效而已，是整部片的心跳。",
+        funding: "目前這裡只顯示製作籌資進度。若要真正開放贊助，需要先讓觀眾登入，再透過付費系統確認每一筆紀錄。",
+        default: "把問題再問一次。慢一點，像在灰白畫面裡找第一個顏色。"
+      }
+    },
+        zone: "禁區裡最危險的不是迷路，是你突然相信自己從沒來過。",
+        white: "別相信白色。白色說它沒有立場，可它吞掉了所有立場。",
+        sister: "林曦把勇敢分給了很多地方。我只是其中一點，剛好還能說話。",
+        funding: "籌資不是把觀眾放在故事外面，而是讓他們成為第一批進入禁區的人。",
+        funding: "籌資進度是一道封鎖線上的光。真正的支持入口，必須等登入與付款驗證系統完成後才能打開。",
+        default: "你的訊息抵達了，但有一段被清空。換個詞，我會試著把它補回來。"
+      }
+    },
+        zone: "禁區封鎖線不是用來防止外面的人進去，是防止裡面的真相出來。",
+        white: "白色是命令。簡潔、乾淨、不可質疑。我曾經很相信它。",
+        sister: "林曦是核心，也是證據。這句話一旦公開，管理局會把我也清空。",
+        funding: "如果這部片被拍出來，就等於把封鎖線移到所有觀眾眼前。這很危險，也必要。",
+        funding: "目前頁面不能收款，這是正確的。沒有登入、金流、付款驗證與紀錄系統前，不該讓任何贊助看起來已經成立。",
+        default: "我不能回答全部。但我可以告訴你，官方紀錄不是歷史，只是版本。"
+      }
+    },
+        zone: "禁區很安靜。安靜到你會以為自己不痛了，可那只是世界暫時忘了怎麼喊。",
+        white: "白色來的時候，我把紅色藏起來了。等你們準備好，它會自己亮起來。",
+        sister: "如果你見到林澈，告訴他不要再替我道歉。他只要記得我笑過，就夠了。",
+        funding: "每一份支援都像一點顏色。不是救我，是讓更多人看見我們曾經被拿走什麼。",
+        funding: "現在只能看見進度。等登入和付費系統完成，真正的支持才會成為能被保存的記憶。",
+        default: "訊號有點冷。你可以再問我一次嗎？問關於顏色，或關於回家。"
+      }
+    }
+};
+
+const state = {
+  selectedTierId: siteConfig.funding.pledgeTiers[1].id,
+  selectedCharacterId: siteConfig.characters[0].id,
+  displayRaised: siteConfig.funding.raised
+};
+  `${siteConfig.funding.currency}${Math.round(value).toLocaleString("zh-TW")}`;
+
+const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+function getSelectedTier() {
+  return siteConfig.funding.pledgeTiers.find((tier) => tier.id === state.selectedTierId);
+}
+
+function getSelectedCharacter() {
+  return siteConfig.characters.find((character) => character.id === state.selectedCharacterId);
+  document.querySelector("#fundingRaised").textContent = `已募 ${formatMoney(state.displayRaised)}`;
+  document.querySelector("#fundingGoal").textContent = `目標 ${formatMoney(goal)}`;
+  document.querySelector("#fundingBar").style.width = `${percent}%`;
+}
+
+function renderPledgeTiers() {
+  const tierList = document.querySelector("#pledgeTiers");
+  tierList.innerHTML = "";
+
+  siteConfig.funding.pledgeTiers.forEach((tier) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "tier-button";
+    button.classList.toggle("is-active", tier.id === state.selectedTierId);
+    button.innerHTML = `
